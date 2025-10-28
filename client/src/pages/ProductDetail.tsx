@@ -156,7 +156,7 @@ export default function ProductDetail() {
               </div>
 
               <div className="pt-6 space-y-3 text-sm text-muted-foreground border-t border-border">
-                <p>Free shipping on orders over GHC1000</p>
+                <p>Free deliveries on orders over GHC1000</p>
                 <p>Authentic luxury fragrances</p>
                 <p>Secure checkout</p>
               </div>
