@@ -1,7 +1,7 @@
 import { Link } from "wouter";
-import galleryImage1 from "@assets/stock_images/luxury_perfume_lifes_58713f0a.jpg";
-import galleryImage2 from "@assets/stock_images/perfume_ingredients__5b443008.jpg";
-import galleryImage3 from "@assets/stock_images/perfume_ingredients__5441d39a.jpg";
+import galleryImage1 from "/gallery img2.png";
+import galleryImage2 from "/gallery img1.png";
+import galleryImage3 from "/gallery img other.png";
 
 export function GalleryGrid() {
   return (

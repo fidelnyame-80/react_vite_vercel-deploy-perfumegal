@@ -14,28 +14,29 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/" data-testid="link-home">
-            <div className="flex items-center gap-3 cursor-pointer hover-elevate rounded-md px-3 py-2 -ml-3">
-              <div className="text-2xl font-serif font-bold tracking-tight text-foreground">
-                The Perfume Gal
-              </div>
+            <div className="flex  hover-elevate rounded-md px-3 py-2 h-[8rem] w-[8rem]">
+              <img
+                src="/logo.png"
+                alt="The Perfume Gal logo"
+                className="h-30 w-30  object-cover"
+              />
+
             </div>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             <Link href="/" data-testid="link-nav-home">
               <span
-                className={`text-sm font-medium tracking-wide cursor-pointer hover-elevate px-3 py-2 rounded-md transition-colors ${
-                  location === "/" ? "text-foreground" : "text-muted-foreground"
-                }`}
+                className={`text-sm font-medium tracking-wide cursor-pointer hover-elevate px-3 py-2 rounded-md transition-colors ${location === "/" ? "text-foreground" : "text-muted-foreground"
+                  }`}
               >
                 HOME
               </span>
             </Link>
             <Link href="/shop" data-testid="link-nav-shop">
               <span
-                className={`text-sm font-medium tracking-wide cursor-pointer hover-elevate px-3 py-2 rounded-md transition-colors ${
-                  location === "/shop" ? "text-foreground" : "text-muted-foreground"
-                }`}
+                className={`text-sm font-medium tracking-wide cursor-pointer hover-elevate px-3 py-2 rounded-md transition-colors ${location === "/shop" ? "text-foreground" : "text-muted-foreground"
+                  }`}
               >
                 SHOP
               </span>

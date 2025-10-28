@@ -29,7 +29,7 @@ export function ProductCard({ product }: ProductCardProps) {
             className="text-lg font-semibold text-card-foreground"
             data-testid={`text-product-price-${product.id}`}
           >
-            ${parseFloat(product.price).toFixed(2)}
+            GHC{parseFloat(product.price).toFixed(2)}
           </p>
         </div>
       </Card>

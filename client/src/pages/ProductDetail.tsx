@@ -94,7 +94,7 @@ export default function ProductDetail() {
                   className="text-3xl font-semibold text-foreground"
                   data-testid="text-product-price"
                 >
-                  ${parseFloat(product.price).toFixed(2)}
+                  GHC{parseFloat(product.price).toFixed(2)}
                 </div>
               </div>
 
@@ -156,7 +156,7 @@ export default function ProductDetail() {
               </div>
 
               <div className="pt-6 space-y-3 text-sm text-muted-foreground border-t border-border">
-                <p>Free shipping on orders over $100</p>
+                <p>Free shipping on orders over GHC1000</p>
                 <p>Authentic luxury fragrances</p>
                 <p>Secure checkout</p>
               </div>
