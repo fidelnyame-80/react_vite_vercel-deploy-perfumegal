@@ -1,5 +1,5 @@
 // api/cart.ts
-import { storage } from '../storage';
+import { storage } from '../server/storage';
 import { insertCartItemSchema } from '@shared/schema';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
