@@ -1,9 +1,9 @@
 // api/cart.ts
 import { storage } from '../storage.ts';
-import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// ZOD INLINE — FROM schema.ts
+// ZOD INLINE — NO @shared
 const insertCartItemSchema = z.object({
   sessionId: z.string(),
   productId: z.string(),
@@ -33,12 +33,12 @@ export default async function handler(
       const item = await storage.addToCart(data);
       return res.status(201).json(item);
     } catch {
-      return res.status(400).json({ error: 'Invalid data' });
+      return res.status(400).json({ error: 'Invalid cart data' });
     }
   }
 
   if (method === 'PATCH') {
-  if (typeof body.quantity !== 'number' || body.quantity < 1) {
+    if (typeof body.quantity !== 'number' || body.quantity < 1) {
       return res.status(400).json({ error: 'Valid quantity required' });
     }
     const item = await storage.updateCartItem(query.id as string, body.quantity);

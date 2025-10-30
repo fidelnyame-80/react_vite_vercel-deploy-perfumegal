@@ -3,7 +3,7 @@ import { storage } from '../storage.ts';
 import { z } from 'zod';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// ZOD INLINE — FROM schema.ts (NO DRIZZLE)
+// ZOD INLINE — NO @shared
 const insertOrderSchema = z.object({
   customerName: z.string(),
   email: z.string().email(),
@@ -13,7 +13,7 @@ const insertOrderSchema = z.object({
   postalCode: z.string(),
   country: z.string(),
   total: z.string(),
-  items: z.string(), // JSON string
+  items: z.string(),
   status: z.string().default('pending'),
 });
 

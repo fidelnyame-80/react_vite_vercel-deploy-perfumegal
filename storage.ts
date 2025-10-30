@@ -1,3 +1,4 @@
+// storage.ts
 import { type Product, type InsertProduct, type CartItem, type InsertCartItem, type Order, type InsertOrder } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -206,10 +207,16 @@ export class MemStorage implements IStorage {
     this.cartItems = new Map();
     this.orders = new Map();
     
-    // Initialize with products
+    // Initialize with products — ADD DEFAULTS HERE
     initialProducts.forEach((product) => {
       const id = randomUUID();
-      this.products.set(id, { ...product, id });
+      const fullProduct: Product = {
+        ...product,
+        id,
+        isFeatured: product.isFeatured ?? 0,  // ← DEFAULT
+        isNew: product.isNew ?? 0,            // ← DEFAULT
+      };
+      this.products.set(id, fullProduct);
     });
   }
 
@@ -224,7 +231,12 @@ export class MemStorage implements IStorage {
 
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
     const id = randomUUID();
-    const product: Product = { ...insertProduct, id };
+    const product: Product = {
+      ...insertProduct,
+      id,
+      isFeatured: insertProduct.isFeatured ?? 0,  // ← DEFAULT
+      isNew: insertProduct.isNew ?? 0,            // ← DEFAULT
+    };
     this.products.set(id, product);
     return product;
   }
@@ -237,16 +249,15 @@ export class MemStorage implements IStorage {
   }
 
   async addToCart(insertCartItem: InsertCartItem): Promise<CartItem> {
-    // Check if item already exists for this session and product
+    // Check if item already exists
     const existingItem = Array.from(this.cartItems.values()).find(
       (item) => item.sessionId === insertCartItem.sessionId && item.productId === insertCartItem.productId
     );
 
     if (existingItem) {
-      // Update existing item quantity - return a fresh clone
       const updated: CartItem = {
         ...existingItem,
-        quantity: existingItem.quantity + insertCartItem.quantity,
+        quantity: existingItem.quantity + (insertCartItem.quantity ?? 1),  // ← DEFAULT
       };
       this.cartItems.set(updated.id, updated);
       return updated;
@@ -254,7 +265,11 @@ export class MemStorage implements IStorage {
 
     // Add new item
     const id = randomUUID();
-    const cartItem: CartItem = { ...insertCartItem, id };
+    const cartItem: CartItem = {
+      ...insertCartItem,
+      id,
+      quantity: insertCartItem.quantity ?? 1,  // ← DEFAULT
+    };
     this.cartItems.set(id, cartItem);
     return cartItem;
   }
@@ -262,7 +277,6 @@ export class MemStorage implements IStorage {
   async updateCartItem(id: string, quantity: number): Promise<CartItem | undefined> {
     const item = this.cartItems.get(id);
     if (item) {
-      // Return a fresh clone to ensure React Query detects the change
       const updated: CartItem = { ...item, quantity };
       this.cartItems.set(id, updated);
       return updated;
@@ -277,7 +291,11 @@ export class MemStorage implements IStorage {
   // Orders
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
     const id = randomUUID();
-    const order: Order = { ...insertOrder, id };
+    const order: Order = {
+      ...insertOrder,
+      id,
+      status: insertOrder.status ?? 'pending',  // ← DEFAULT
+    };
     this.orders.set(id, order);
     return order;
   }
