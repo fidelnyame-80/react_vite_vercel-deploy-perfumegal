@@ -1,6 +1,14 @@
 // api/cart.ts
-import { storage } from '../storage.ts';  
+import { storage } from '../storage.ts';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { z } from 'zod';
+
+// ZOD INLINE — FROM schema.ts
+const insertCartItemSchema = z.object({
+  sessionId: z.string(),
+  productId: z.string(),
+  quantity: z.number().int().min(1).default(1),
+});
 
 export default async function handler(
   req: VercelRequest,
@@ -30,6 +38,9 @@ export default async function handler(
   }
 
   if (method === 'PATCH') {
+  if (typeof body.quantity !== 'number' || body.quantity < 1) {
+      return res.status(400).json({ error: 'Valid quantity required' });
+    }
     const item = await storage.updateCartItem(query.id as string, body.quantity);
     return item ? res.json(item) : res.status(404).end();
   }

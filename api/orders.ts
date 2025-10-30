@@ -1,7 +1,21 @@
 // api/orders.ts
 import { storage } from '../storage.ts';
-import { insertOrderSchema } from '@shared/schema';
+import { z } from 'zod';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+
+// ZOD INLINE — FROM schema.ts (NO DRIZZLE)
+const insertOrderSchema = z.object({
+  customerName: z.string(),
+  email: z.string().email(),
+  phone: z.string(),
+  address: z.string(),
+  city: z.string(),
+  postalCode: z.string(),
+  country: z.string(),
+  total: z.string(),
+  items: z.string(), // JSON string
+  status: z.string().default('pending'),
+});
 
 export default async function handler(
   req: VercelRequest,
@@ -12,8 +26,8 @@ export default async function handler(
   try {
     const data = insertOrderSchema.parse(req.body);
     const order = await storage.createOrder(data);
-    res.status(201).json(order);
+    return res.status(201).json(order);
   } catch {
-    res.status(400).json({ error: 'Invalid order' });
+    return res.status(400).json({ error: 'Invalid order data' });
   }
 }
