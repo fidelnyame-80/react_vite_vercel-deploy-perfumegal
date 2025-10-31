@@ -6,8 +6,13 @@ import type { Product } from "@shared/schema";
 
 export default function Shop() {
   const { data: products, isLoading } = useQuery<Product[]>({
-    queryKey: ["/api/products"],
-  });
+  queryKey: ["/api/products"],
+  queryFn: async () => {
+    const res = await fetch("/api/products");
+    if (!res.ok) throw new Error("Failed to load products");
+    return res.json();
+  },
+});
 
   return (
     <div className="min-h-screen bg-background">
