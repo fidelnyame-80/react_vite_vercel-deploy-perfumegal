@@ -1,5 +1,5 @@
 // api/products.ts
-import { storage } from '../storage';
+import { storage } from '../dist/storage';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(

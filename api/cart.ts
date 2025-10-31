@@ -1,5 +1,5 @@
 // api/cart.ts
-import { storage } from '../storage.ts';
+import { storage } from '../dist/storage.ts';
 import { z } from 'zod';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
